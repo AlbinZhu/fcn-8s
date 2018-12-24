@@ -117,7 +117,7 @@ upsample_filter_np_x16 = bilinear_upsample_weights(2,
                                                    number_of_classes)
 
 upsampled_logits = tf.nn.conv2d_transpose(upsampled_logits, upsample_filter_tensor_x2,
-                                          output_shape=upsampled_logits_shape,
+                                          output_shape=tf.shape(aux_logits_8s),
                                           strides=[1, 2, 2, 1],
                                           padding='SAME')
 
