@@ -93,7 +93,7 @@ with tf.variable_scope('vgg_16/fc8'):
                                  weights_initializer=tf.zeros_initializer,
                                  scope='conv_pool4')
 
-    aux_logits_8s = slim.conv2d(pool4_feature, number_of_classes, [1, 1],
+    aux_logits_8s = slim.conv2d(pool3_feature, number_of_classes, [1, 1],
                                  activation_fn=None,
                                  weights_initializer=tf.zeros_initializer,
                                  scope='conv_pool3')
@@ -112,9 +112,6 @@ upsampled_logits = tf.nn.conv2d_transpose(logits, upsample_filter_tensor_x2,
 
 # 16 / 2
 upsampled_logits = upsampled_logits + aux_logits_16s
-
-upsample_filter_np_x16 = bilinear_upsample_weights(2,
-                                                   number_of_classes)
 
 upsampled_logits = tf.nn.conv2d_transpose(upsampled_logits, upsample_filter_tensor_x2,
                                           output_shape=tf.shape(aux_logits_8s),
